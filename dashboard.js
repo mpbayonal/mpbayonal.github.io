@@ -288,49 +288,6 @@ function visitasCategoria(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
-        container: "#wdr-component",
-        toolbar: false,
-        report: {
-            dataSource: {
-                data: tabla1
-            },
-            "slice": {
-                "rows": [
-
-                     {
-                        "uniqueName": "categoria"
-                    }
-                ],
-                "columns": [
-                    {
-                        "uniqueName": "Measures"
-                    }
-                ],
-                "measures": [
-                    {
-                        "uniqueName": "numero_pedidos",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de pedidos"
-                    },
-                    {
-                        "uniqueName": "nombre",
-                        "aggregation": "count",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de Restaurantes"
-                    },
-                    {
-                        "uniqueName": "gasto",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Ingresos"
-                    }]
-
-
-            }
-        }
-    });
 
 
 
@@ -385,9 +342,247 @@ function visitasCategoria(){
     });
 
 }
+function ingresosCategoria(){
+
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+
+
+
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "categoria": restaurantesLogs[d].categoria,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+    }
+
+    for(h in categoriasLogs){
+        y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+        grafica1.push(y)
+
+    }
+
+    console.log("paso")
+
+
+    var pivot = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "categoria"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+
+                    {
+                        "uniqueName": "gasto",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Ingresos"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
+
+}
+
+function restaurantesCategoria(){
+
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+
+
+
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "categoria": restaurantesLogs[d].categoria,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+    }
+
+    for(h in categoriasLogs){
+        y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+        grafica1.push(y)
+
+    }
+
+    console.log("paso")
+
+
+    var pivot = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                     {
+                        "uniqueName": "categoria"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+
+                    {
+                        "uniqueName": "nombre",
+                        "aggregation": "count",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de Restaurantes"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
+
+}
 
 
 function visitasPorEdad(){
+
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in edadLogs)
+    {
+
+        y = [d,parseInt(edadLogs[d].numeroCompras)]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "edad": edadLogs[d].edad,
+            "numero_total": edadLogs[d].numeroTotal,
+            "numero_mujeres": edadLogs[d].numeroMujeres,
+            "numero_hombres": edadLogs[d].numeroHombres,
+            "numero_pedidos": edadLogs[d].numeroCompras,
+            "gasto": parseInt(edadLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+
+
+
+
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Numero de compras promedio por edad'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text:  'Numero de compras promedio por edad'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Numero de compras'
+        },
+        series: [{
+            name:  'Numero de compras promedio por edad',
+            data: grafica1,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+}
+function pedidosPorEdad(){
 
 
     tabla1 = []
@@ -454,7 +649,77 @@ function visitasPorEdad(){
                         "aggregation": "average",
                         "format": "currency",
                         "grandTotalCaption": "Gasto"
-                    },{
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
+
+}
+
+
+function clientesPorEdad(){
+
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in edadLogs)
+    {
+
+        y = [d,parseInt(edadLogs[d].numeroCompras)]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "edad": edadLogs[d].edad,
+            "numero_total": edadLogs[d].numeroTotal,
+            "numero_mujeres": edadLogs[d].numeroMujeres,
+            "numero_hombres": edadLogs[d].numeroHombres,
+            "numero_pedidos": edadLogs[d].numeroCompras,
+            "gasto": parseInt(edadLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    var pivot = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "edad"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+                    {
                         "uniqueName": "numero_total",
                         "aggregation": "average",
                         "format": "currency",
@@ -478,58 +743,93 @@ function visitasPorEdad(){
 
 
 
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Numero de compras promedio por edad'
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-            type: 'category',
-            labels: {
-                rotation: -45,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text:  'Numero de compras promedio por edad'
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: 'Numero de compras'
-        },
-        series: [{
-            name:  'Numero de compras promedio por edad',
-            data: grafica1,
-            dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
-        }]
-    });
+
 
 }
 
+function clientesPorEdadGenero(){
+
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in edadLogs)
+    {
+
+        y = [d,parseInt(edadLogs[d].numeroCompras)]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "edad": edadLogs[d].edad,
+            "numero_total": edadLogs[d].numeroTotal,
+            "numero_mujeres": edadLogs[d].numeroMujeres,
+            "numero_hombres": edadLogs[d].numeroHombres,
+            "numero_pedidos": edadLogs[d].numeroCompras,
+            "gasto": parseInt(edadLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    var pivot = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "edad"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+                    {
+                        "uniqueName": "numero_total",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de clientes"
+                    },{
+                        "uniqueName": "numero_mujeres",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de mujeres"
+                    },{
+                        "uniqueName": "numero_hombres",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de hombres"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
+
+}
 
 function gastoPorEdad(){
 
@@ -934,4 +1234,130 @@ function establecimientosconMasIngresos(){
     });
 
 }
+function establecimientosMasVisitadosGenero(){
 
+
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+        y = [restaurantesLogs[d].nombre,restaurantesLogs[d].numeroPedidos]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "categoria": restaurantesLogs[d].categoria,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    var pivot = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "nombre"
+                    }, {
+                        "uniqueName": "categoria"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+                    {
+                        "uniqueName": "numero_pedidos",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de pedidos"
+                    },
+                    {
+                        "uniqueName": "gasto",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Ingresos"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Número de compras por establecimiento'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Número de compras por establecimiento'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Número de compras '
+        },
+        series: [{
+            name: 'Número de compras por establecimiento',
+            data: grafica1,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+}
