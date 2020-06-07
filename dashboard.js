@@ -52,6 +52,7 @@ function categoria(nombre) {
     this.numeroRestaurante = 1;
     this.numeroCompras = 0;
     this.gastoTotal = 0;
+    this.tiempoEspera = 0;
 
 
 }
@@ -173,6 +174,21 @@ function cargarRestaurante(restaurantes) {
             categoriasLogs[categoria1].numeroRestaurante = categoriasLogs[categoria1].numeroRestaurante + 1;
 
         }
+
+        if (categoriasLogs[categoria1].numeroRestaurante === 1){
+            categoriasLogs[categoria1].tiempoEspera = tiempoEspera
+        }
+        else{
+            tiemp = categoriasLogs[categoria1].tiempoEspera
+            tiemp2  = tiemp * (categoriasLogs[categoria1].numeroRestaurante-1)
+
+            tiemp3 = tiemp2 + tiempoEspera
+            categoriasLogs[categoria1].tiempoEspera = tiemp3 / categoriasLogs[categoria1].numeroRestaurante
+
+        }
+
+
+
 
 
     }
@@ -1459,7 +1475,7 @@ function establecimientosTiempoEspera(){
 
 }
 
-function establecimientosTiempoEspera(){
+function tiempoEsperaCategoria(){
 
     tablaV = null
     graficaV = null
@@ -1471,13 +1487,12 @@ function establecimientosTiempoEspera(){
     for(d in restaurantesLogs)
     {
 
-        y = [restaurantesLogs[d].nombre,parseInt(restaurantesLogs[d].tiempoEspera)/60]
-        grafica1.push(y)
 
-        console.log(restaurantesLogs[d])
+
+
         log = {
             "nombre": restaurantesLogs[d].nombre,
-            "tiempo de espera": restaurantesLogs[d].tiempoEspera,
+            "categoria": restaurantesLogs[d].categoria,
             "numero_pedidos": restaurantesLogs[d].numeroPedidos,
             "gasto": parseInt(restaurantesLogs[d].gasto)
         };
@@ -1485,9 +1500,11 @@ function establecimientosTiempoEspera(){
         tabla1.push(log)
 
 
+    }
 
-
-
+    for(h in categoriasLogs){
+        y = [categoriasLogs[h].nombre,categoriasLogs[h].tiempoEspera/60]
+        grafica1.push(y)
 
     }
 
@@ -1506,13 +1523,12 @@ function establecimientosTiempoEspera(){
     });
 
 
-
     graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Tiempo de Espera por establecimiento'
+            text: 'Tiempo de espera por categoria'
         },
         subtitle: {
             text: ''
@@ -1530,17 +1546,17 @@ function establecimientosTiempoEspera(){
         yAxis: {
             min: 0,
             title: {
-                text: 'Tiempo de Espera por establecimiento en pesos'
+                text: 'Tiempo de espera por categoria'
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: 'Tiempo de Espera'
+            pointFormat: 'Tiempo de espera'
         },
         series: [{
-            name: 'Tiempo de Espera por establecimiento',
+            name: 'Tiempo de espera por categoria',
             data: grafica1,
             dataLabels: {
                 enabled: true,
