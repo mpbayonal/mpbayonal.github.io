@@ -1796,3 +1796,91 @@ function ingresosCategoriaGenero(){
 
 
 }
+
+
+function ingresosRestauranteGenero(){
+
+    tablaV = null
+    graficaV = null
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+
+
+
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "numero_pedidosHombre": restaurantesLogs[d].numeroPedidosHombre,
+            "numero_pedidosMujer": restaurantesLogs[d].numeroPedidosMujer,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos
+
+        };
+
+        tabla1.push(log)
+
+
+    }
+
+    for(h in categoriasLogs){
+        y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+        grafica1.push(y)
+
+    }
+
+    console.log("paso")
+
+
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "nombre"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+
+                    {
+                        "uniqueName": "numero_pedidosHombre",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de pedidos Hombres"
+                    },
+                    {
+                        "uniqueName": "numero_pedidosMujer",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de pedidos Mujeres"
+                    },{
+                        "uniqueName": "numero_pedidos",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de pedidos Total"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
+
+}
