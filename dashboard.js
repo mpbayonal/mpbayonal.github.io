@@ -5,6 +5,8 @@ firebase.initializeApp({
 });
 var users = firebase.database().ref();
 
+var tablaV = null
+var graficaV = null
 
 function user(edad, idUsuario, genero) {
     this.edad = edad;
@@ -255,7 +257,8 @@ function datosEdad(edad, mujer, hombre) {
 
 function visitasCategoria(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -288,10 +291,19 @@ function visitasCategoria(){
     console.log("paso")
 
 
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        height: 3,
+        report: {
+            dataSource: {
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
+            }
+        }
+    });
 
 
-
-    Highcharts.chart('container', {
+    graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
@@ -344,7 +356,8 @@ function visitasCategoria(){
 }
 function ingresosCategoria(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -377,7 +390,7 @@ function ingresosCategoria(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -418,7 +431,8 @@ function ingresosCategoria(){
 
 function restaurantesCategoria(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -451,7 +465,7 @@ function restaurantesCategoria(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -493,7 +507,8 @@ function restaurantesCategoria(){
 
 function visitasPorEdad(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -527,11 +542,20 @@ function visitasPorEdad(){
     console.log("paso")
 
 
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        height: 3,
+        report: {
+            dataSource: {
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
+            }
+        }
+    });
 
 
 
-
-    Highcharts.chart('container', {
+    graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
@@ -584,7 +608,8 @@ function visitasPorEdad(){
 }
 function pedidosPorEdad(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -617,8 +642,17 @@ function pedidosPorEdad(){
 
     console.log("paso")
 
-
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        height: 3,
+        report: {
+            dataSource: {
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
+            }
+        }
+    });
+    graficaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -665,7 +699,8 @@ function pedidosPorEdad(){
 
 function clientesPorEdad(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -699,7 +734,7 @@ function clientesPorEdad(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -749,7 +784,8 @@ function clientesPorEdad(){
 
 function clientesPorEdadGenero(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -783,7 +819,7 @@ function clientesPorEdadGenero(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -833,7 +869,8 @@ function clientesPorEdadGenero(){
 
 function gastoPorEdad(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -867,62 +904,20 @@ function gastoPorEdad(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
+        height: 3,
         report: {
             dataSource: {
-                data: tabla1
-            },
-            "slice": {
-                "rows": [
-
-                    {
-                        "uniqueName": "edad"
-                    }
-                ],
-                "columns": [
-                    {
-                        "uniqueName": "Measures"
-                    }
-                ],
-                "measures": [
-                    {
-                        "uniqueName": "numero_pedidos",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de pedidos"
-                    },
-                    {
-                        "uniqueName": "gasto",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Gasto"
-                    },{
-                        "uniqueName": "numero_total",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de clientes"
-                    },{
-                        "uniqueName": "numero_mujeres",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de mujeres"
-                    },{
-                        "uniqueName": "numero_hombres",
-                        "aggregation": "average",
-                        "format": "currency",
-                        "grandTotalCaption": "Numero de hombres"
-                    }]
-
-
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
             }
         }
     });
 
 
 
-    Highcharts.chart('container', {
+    graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
@@ -981,7 +976,8 @@ function gastoPorEdad(){
 
 function establecimientosMasVisitados(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -1013,7 +1009,7 @@ console.log(restaurantesLogs[d])
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -1055,7 +1051,7 @@ console.log(restaurantesLogs[d])
 
 
 
-    Highcharts.chart('container', {
+    graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
@@ -1109,7 +1105,8 @@ console.log(restaurantesLogs[d])
 
 function establecimientosconMasIngresos(){
 
-
+    tablaV = null
+    graficaV = null
     tabla1 = []
     grafica1 = []
 
@@ -1141,7 +1138,7 @@ function establecimientosconMasIngresos(){
     console.log("paso")
 
 
-    var pivot = new WebDataRocks({
+    tablaV = new WebDataRocks({
         container: "#wdr-component",
         toolbar: false,
         report: {
@@ -1183,7 +1180,7 @@ function establecimientosconMasIngresos(){
 
 
 
-    Highcharts.chart('container', {
+    graficaV = Highcharts.chart('container', {
         chart: {
             type: 'column'
         },
