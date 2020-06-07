@@ -27,6 +27,8 @@ function restaurante( idRestaurante, nombre, categoria, calificacion,  tiempoEsp
     this.calificacion = calificacion;
     this.tiempoEspera = tiempoEspera;
     this.numeroPedidos = 0;
+    this.numeroPedidosHombre = 0;
+    this.numeroPedidosMujer = 0;
     this.gasto = 0;
     this.pedidos =  {};
 
@@ -51,6 +53,8 @@ function categoria(nombre) {
     this.nombre = nombre;
     this.numeroRestaurante = 1;
     this.numeroCompras = 0;
+    this.numeroComprasHombre = 0;
+    this.numeroComprasMujer = 0;
     this.gastoTotal = 0;
     this.tiempoEspera = 0;
 
@@ -244,6 +248,14 @@ function cargarUsuario(usuarios) {
                     restaurantesLogs[restaurante].gasto =restaurantesLogs[restaurante].gasto + gasto
                 }
 
+                if (genero === "m") {
+                    categoriasLogs[categoria].numeroComprasHombre = categoriasLogs[categoria].numeroComprasHombre + 1
+                    restaurantesLogs[restaurante].numeroPedidosHombre = restaurantesLogs[restaurante].numeroPedidosHombre + 1
+
+                } else {
+                    categoriasLogs[categoria].numeroComprasMujer = categoriasLogs[categoria].numeroComprasMujer + 1
+                    restaurantesLogs[restaurante].numeroPedidosMujer = restaurantesLogs[restaurante].numeroPedidosMujer + 1
+                }
                 edadLogs[edad].numeroCompras = edadLogs[edad].numeroCompras +1
                 edadLogs[edad].gasto = edadLogs[edad].gasto + gasto
 
@@ -1572,5 +1584,215 @@ function tiempoEsperaCategoria(){
             }
         }]
     });
+
+}
+
+function establecimientosMasVisitadosGenero2(){
+
+    tablaV = null
+    graficaV = null
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in pedidos())
+    {
+
+        y = [restaurantesLogs[d].nombre,restaurantesLogs[d].numeroPedidos]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "categoria": restaurantesLogs[d].categoria,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "nombre"
+                    }, {
+                        "uniqueName": "categoria"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+                    {
+                        "uniqueName": "numero_pedidos",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de pedidos"
+                    },
+                    {
+                        "uniqueName": "gasto",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Ingresos"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+    graficaV = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Número de compras por establecimiento'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Número de compras por establecimiento'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Número de compras '
+        },
+        series: [{
+            name: 'Número de compras por establecimiento',
+            data: grafica1,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+}
+
+function ingresosCategoriaGenero(){
+
+    tablaV = null
+    graficaV = null
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in categoriasLogs)
+    {
+
+
+
+
+        log = {
+            "categoria": categoriasLogs[d].nombre,
+            "numeroComprasMujer": categoriasLogs[d].numeroComprasMujer,
+            "numeroComprasHombre": categoriasLogs[d].numeroComprasHombre,
+
+        };
+
+        tabla1.push(log)
+
+
+    }
+
+    for(h in categoriasLogs){
+        y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+        grafica1.push(y)
+
+    }
+
+    console.log("paso")
+
+
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        report: {
+            dataSource: {
+                data: tabla1
+            },
+            "slice": {
+                "rows": [
+
+                    {
+                        "uniqueName": "categoria"
+                    }
+                ],
+                "columns": [
+                    {
+                        "uniqueName": "Measures"
+                    }
+                ],
+                "measures": [
+
+                    {
+                        "uniqueName": "numeroComprasMujer",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de Compras Mujeres"
+                    },
+                    {
+                        "uniqueName": "numeroComprasHombre",
+                        "aggregation": "average",
+                        "format": "currency",
+                        "grandTotalCaption": "Numero de Compras Hombres"
+                    }]
+
+
+            }
+        }
+    });
+
+
+
+
 
 }
