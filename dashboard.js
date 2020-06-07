@@ -29,6 +29,8 @@ function restaurante( idRestaurante, nombre, categoria, calificacion,  tiempoEsp
     this.numeroPedidos = 0;
     this.numeroPedidosHombre = 0;
     this.numeroPedidosMujer = 0;
+    this.numeroGastoHombre = 0;
+    this.numeroGastoMujer = 0;
     this.gasto = 0;
     this.pedidos =  {};
 
@@ -55,6 +57,8 @@ function categoria(nombre) {
     this.numeroCompras = 0;
     this.numeroComprasHombre = 0;
     this.numeroComprasMujer = 0;
+    this.numeroGastoHombre = 0;
+    this.numeroGastoMujer = 0;
     this.gastoTotal = 0;
     this.tiempoEspera = 0;
 
@@ -250,10 +254,17 @@ function cargarUsuario(usuarios) {
 
                 if (genero === "m") {
                     categoriasLogs[categoria].numeroComprasHombre = categoriasLogs[categoria].numeroComprasHombre + 1
+                    categoriasLogs[categoria].numeroGastoHombre = categoriasLogs[categoria].numeroGastoHombre + gasto
+
                     restaurantesLogs[restaurante].numeroPedidosHombre = restaurantesLogs[restaurante].numeroPedidosHombre + 1
+                    restaurantesLogs[restaurante].numeroGastoHombre = restaurantesLogs[restaurante].numeroGastoHombre + gasto
 
                 } else {
                     categoriasLogs[categoria].numeroComprasMujer = categoriasLogs[categoria].numeroComprasMujer + 1
+                    categoriasLogs[categoria].numeroGastoMujer = categoriasLogs[categoria].numeroGastoMujer + gasto
+
+
+                    restaurantesLogs[restaurante].numeroGastoMujer = restaurantesLogs[restaurante].numeroGastoMujer + gasto
                     restaurantesLogs[restaurante].numeroPedidosMujer = restaurantesLogs[restaurante].numeroPedidosMujer + 1
                 }
                 edadLogs[edad].numeroCompras = edadLogs[edad].numeroCompras +1
@@ -1798,7 +1809,7 @@ function ingresosCategoriaGenero(){
 }
 
 
-function ingresosRestauranteGenero(){
+function ingresosRestauranteGenero() {
 
     tablaV = null
     graficaV = null
@@ -1806,11 +1817,7 @@ function ingresosRestauranteGenero(){
     grafica1 = []
 
 
-
-    for(d in restaurantesLogs)
-    {
-
-
+    for (d in restaurantesLogs) {
 
 
         log = {
@@ -1826,8 +1833,8 @@ function ingresosRestauranteGenero(){
 
     }
 
-    for(h in categoriasLogs){
-        y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+    for (h in categoriasLogs) {
+        y = [categoriasLogs[h].nombre, categoriasLogs[h].numeroCompras]
         grafica1.push(y)
 
     }
@@ -1867,7 +1874,7 @@ function ingresosRestauranteGenero(){
                         "aggregation": "average",
                         "format": "currency",
                         "grandTotalCaption": "Numero de pedidos Mujeres"
-                    },{
+                    }, {
                         "uniqueName": "numero_pedidos",
                         "aggregation": "average",
                         "format": "currency",
@@ -1879,8 +1886,90 @@ function ingresosRestauranteGenero(){
         }
     });
 
-
-
-
-
 }
+    function gastoRestauranteGenero(){
+
+        tablaV = null
+        graficaV = null
+        tabla1 = []
+        grafica1 = []
+
+
+
+        for(d in restaurantesLogs)
+        {
+
+
+
+
+            log = {
+                "nombre": restaurantesLogs[d].nombre,
+                "numero_pedidosHombre": restaurantesLogs[d].numeroGastoHombre,
+                "numero_pedidosMujer": restaurantesLogs[d].numeroGastoMujer,
+                "numero_pedidos": restaurantesLogs[d].gasto
+
+            };
+
+            tabla1.push(log)
+
+
+        }
+
+        for(h in categoriasLogs){
+            y = [categoriasLogs[h].nombre,categoriasLogs[h].numeroCompras]
+            grafica1.push(y)
+
+        }
+
+        console.log("paso")
+
+
+        tablaV = new WebDataRocks({
+            container: "#wdr-component",
+            toolbar: false,
+            report: {
+                dataSource: {
+                    data: tabla1
+                },
+                "slice": {
+                    "rows": [
+
+                        {
+                            "uniqueName": "nombre"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "uniqueName": "Measures"
+                        }
+                    ],
+                    "measures": [
+
+                        {
+                            "uniqueName": "numero_pedidosHombre",
+                            "aggregation": "average",
+                            "format": "currency",
+                            "grandTotalCaption": "Gasto total Hombres"
+                        },
+                        {
+                            "uniqueName": "numero_pedidosMujer",
+                            "aggregation": "average",
+                            "format": "currency",
+                            "grandTotalCaption": "Gasto total Mujeres"
+                        },{
+                            "uniqueName": "numero_pedidos",
+                            "aggregation": "average",
+                            "format": "currency",
+                            "grandTotalCaption": "Gasto Total"
+                        }]
+
+
+                }
+            }
+        });
+
+
+
+
+
+    }
