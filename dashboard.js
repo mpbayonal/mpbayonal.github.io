@@ -1358,3 +1358,203 @@ function establecimientosMasVisitadosGenero(){
     });
 
 }
+
+function establecimientosTiempoEspera(){
+
+    tablaV = null
+    graficaV = null
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+        y = [restaurantesLogs[d].nombre,parseInt(restaurantesLogs[d].tiempoEspera)/60]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "tiempo de espera": restaurantesLogs[d].tiempoEspera,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        height: 3,
+        report: {
+            dataSource: {
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
+            }
+        }
+    });
+
+
+
+    graficaV = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tiempo de Espera por establecimiento'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Tiempo de Espera por establecimiento en pesos'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Tiempo de Espera'
+        },
+        series: [{
+            name: 'Tiempo de Espera por establecimiento',
+            data: grafica1,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+}
+
+function establecimientosTiempoEspera(){
+
+    tablaV = null
+    graficaV = null
+    tabla1 = []
+    grafica1 = []
+
+
+
+    for(d in restaurantesLogs)
+    {
+
+        y = [restaurantesLogs[d].nombre,parseInt(restaurantesLogs[d].tiempoEspera)/60]
+        grafica1.push(y)
+
+        console.log(restaurantesLogs[d])
+        log = {
+            "nombre": restaurantesLogs[d].nombre,
+            "tiempo de espera": restaurantesLogs[d].tiempoEspera,
+            "numero_pedidos": restaurantesLogs[d].numeroPedidos,
+            "gasto": parseInt(restaurantesLogs[d].gasto)
+        };
+
+        tabla1.push(log)
+
+
+
+
+
+
+    }
+
+    console.log("paso")
+
+
+    tablaV = new WebDataRocks({
+        container: "#wdr-component",
+        toolbar: false,
+        height: 3,
+        report: {
+            dataSource: {
+                filename: "https://cdn.webdatarocks.com/data/data.csv"
+            }
+        }
+    });
+
+
+
+    graficaV = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tiempo de Espera por establecimiento'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Tiempo de Espera por establecimiento en pesos'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Tiempo de Espera'
+        },
+        series: [{
+            name: 'Tiempo de Espera por establecimiento',
+            data: grafica1,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+}
